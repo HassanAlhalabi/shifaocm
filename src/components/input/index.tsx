@@ -1,5 +1,5 @@
 import React from "react";
-import { Control, Controller, Path } from "react-hook-form";
+import { Control, Controller, Path, RegisterOptions } from "react-hook-form";
 import {
   StyleSheet,
   Text,
@@ -15,15 +15,20 @@ const Input = <T,>(
     control: Control<T>;
     name: Path<T>;
     required?: boolean;
+    rules?: Omit<
+      RegisterOptions<T, Path<T>>,
+      "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
+    >;
   }
 ) => {
-  const { label, error, control, name, required, ...rest } = props;
+  const { label, error, control, name, required, rules = {}, ...rest } = props;
   return (
     <Controller
       control={control}
       name={name}
       rules={{
         required: { value: required, message: "هذا الحقل مطلوب" },
+        ...rules,
       }}
       render={({ field: { onChange } }) => (
         <View style={styles.inputHolder}>

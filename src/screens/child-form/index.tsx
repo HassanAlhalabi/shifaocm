@@ -14,11 +14,11 @@ import { RootStackParamList } from "../../../App";
 
 export interface HeightPredictInfo {
   gender: GENDER;
-  height: number;
-  weight: number;
-  age: number;
-  fatherHeight: number;
-  motherHeight: number;
+  height: string;
+  weight: string;
+  age: string;
+  fatherHeight: string;
+  motherHeight: string;
 }
 
 const ChildFormScreen = () => {
@@ -28,27 +28,39 @@ const ChildFormScreen = () => {
     watch,
     formState: { errors },
     reset,
-  } = useForm<HeightPredictInfo>();
+    setValue,
+  } = useForm<HeightPredictInfo>({
+    defaultValues: {
+      gender: GENDER.MALE,
+    },
+  });
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
+  const gender = watch("gender");
+  const childHeight = watch("height");
+  const motherHeight = watch("motherHeight");
+  const fatherHeight = watch("fatherHeight");
+  const childWeight = watch("weight");
+  const childAge = watch("age");
+
   const handleCalculate = () => {
-    const gender = Number(watch("gender"));
-    const childHeight = Number(watch("height"));
-    const motherHeight = Number(watch("motherHeight"));
-    const fatherHeight = Number(watch("fatherHeight"));
-    const childWeight = Number(watch("weight"));
     let futureHeight = null;
     if (gender === GENDER.MALE) {
-      futureHeight = (motherHeight + fatherHeight + 13) / 2;
+      futureHeight = (Number(motherHeight) + Number(fatherHeight) + 13) / 2;
     } else if (gender === GENDER.FEMALE) {
-      futureHeight = (motherHeight + fatherHeight - 13) / 2;
+      futureHeight = (Number(motherHeight) + Number(fatherHeight) - 13) / 2;
     }
 
     navigation.navigate("Results", {
-      futureHeight,
-      childWeight,
-      childHeight,
+      futureHeight: Number(futureHeight),
+      childWeight: Number(childHeight),
+      childHeight: Number(childWeight),
     });
+  };
+
+  const resetForm = () => {
+    reset();
+    setValue("gender", GENDER.MALE);
   };
 
   return (
@@ -57,63 +69,78 @@ const ChildFormScreen = () => {
         style={styles.container}
         contentContainerStyle={styles.containerContent}
       >
-        <Text style={styles.slogan}>أدخل بيانات طفلك</Text>
+        <View style={styles.innerContent}>
+          <Text style={styles.slogan}>أدخل بيانات طفلك</Text>
 
-        <Select
-          options={sexes}
-          control={control}
-          name="gender"
-          label="جنس الطفل :"
-          error={errors?.gender?.message}
-          required
-        />
-
-        <Input
-          control={control}
-          name="height"
-          keyboardType="numeric"
-          label="طول الطفل الحالي (سم) :"
-          error={errors?.height?.message}
-          required
-        />
-        <Input
-          control={control}
-          name="age"
-          keyboardType="numeric"
-          label="عمر الطفل بالسنوات :"
-          required
-          error={errors?.weight?.message}
-        />
-        <Input
-          control={control}
-          name="weight"
-          keyboardType="numeric"
-          label="وزن الطفل (ك.غ) :"
-          required
-          error={errors?.weight?.message}
-        />
-        <Input
-          control={control}
-          name="fatherHeight"
-          keyboardType="numeric"
-          label="طول الأب (سم) :"
-          required
-          error={errors?.fatherHeight?.message}
-        />
-        <Input
-          control={control}
-          name="motherHeight"
-          keyboardType="numeric"
-          label="طول الأم (سم) :"
-          required
-          error={errors?.motherHeight?.message}
-        />
-        <View style={styles.buttonGroup}>
-          <CustomButton title={"مسح"} onPress={() => reset()} />
-          <CustomButton
-            title={"حساب"}
-            onPress={handleSubmit(handleCalculate)}
+          <Select
+            options={sexes}
+            control={control}
+            name="gender"
+            label="جنس الطفل :"
+            error={errors?.gender?.message}
+            required
           />
+
+          <Input
+            control={control}
+            name="height"
+            keyboardType="numeric"
+            label="طول الطفل الحالي (سم) :"
+            error={errors?.height?.message}
+            required
+            value={childHeight}
+          />
+          <Input
+            control={control}
+            name="age"
+            keyboardType="numeric"
+            label="عمر الطفل بالسنوات :"
+            required
+            value={childAge}
+            rules={{
+              validate: (value) => {
+                return Number(value) <= 0 || Number(value) > 18
+                  ? "العمر يجب أن يكون بين سنة و 18 سنة"
+                  : true;
+              },
+            }}
+            error={errors?.age?.message}
+          />
+          <Input
+            control={control}
+            name="weight"
+            keyboardType="numeric"
+            label="وزن الطفل (ك.غ) :"
+            required
+            value={childWeight}
+            error={errors?.weight?.message}
+          />
+          <Input
+            control={control}
+            name="fatherHeight"
+            keyboardType="numeric"
+            label="طول الأب (سم) :"
+            required
+            value={fatherHeight}
+            error={errors?.fatherHeight?.message}
+          />
+          <Input
+            control={control}
+            name="motherHeight"
+            keyboardType="numeric"
+            label="طول الأم (سم) :"
+            required
+            error={errors?.motherHeight?.message}
+            value={motherHeight}
+          />
+          <View style={styles.buttonGroup}>
+            <CustomButton title={"مسح"} onPress={resetForm} icon="refresh" />
+            <CustomButton
+              title={"حساب"}
+              onPress={handleSubmit(handleCalculate)}
+              icon="calculator"
+            />
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -135,17 +162,23 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
-    overflow: "scroll",
+
     display: "flex",
     justifyContent: "center",
   },
   containerContent: {
-    justifyContent: "center",
-    alignItems: "center",
     paddingTop: 20,
     paddingBottom: 20,
+    flex: 1,
   },
   container: {
+    flex: 1,
+  },
+  innerContent: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
     flex: 1,
   },
   buttonGroup: {

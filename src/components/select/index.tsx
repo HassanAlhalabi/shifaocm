@@ -31,12 +31,13 @@ const Select = <T,>({
     rules={{
       required: { value: required, message: "هذا الحقل مطلوب" },
     }}
-    render={({ field: { onChange } }) => (
+    render={({ field: { onChange, value } }) => (
       <View style={styles.inputHolder}>
         {Boolean(label) && <Text style={styles.inputLabel}>{label}</Text>}
         <SelectDropdown
           data={options}
           onSelect={(selectedItem: SelectItem) => onChange(selectedItem.id)}
+          defaultValue={options.filter((option) => option.id === value)[0]}
           renderButton={(selectedItem, isOpened) => {
             return (
               <View>
@@ -48,7 +49,7 @@ const Select = <T,>({
                     />
                   )}
                   <Text style={styles.dropdownButtonTxtStyle}>
-                    {selectedItem && selectedItem.title}
+                    {selectedItem?.title}
                   </Text>
                   <Icon
                     name={isOpened ? "chevron-up" : "chevron-down"}
