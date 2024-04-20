@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import * as Linking from "expo-linking";
 
 import CustomButton from "../../components/button";
 import { RootStackParamList } from "../../../App";
@@ -12,6 +13,12 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
+        <View style={styles.logoHolder}>
+          <Image
+            source={require("../../../assets/logo.png")}
+            style={styles.logo}
+          />
+        </View>
         <Text style={styles.welcome}>أهلاً بك</Text>
         <Text style={styles.desc}>
           هنا ستتمكن من معرفة عمر طفلك المستقبلي و تتأكد من أن طوله و وزنه
@@ -22,10 +29,12 @@ const HomeScreen = () => {
           <CustomButton
             onPress={() => navigation.navigate("ChildForm")}
             title="متابعة"
+            icon="arrow-left"
           />
           <CustomButton
-            onPress={() => navigation.navigate("ChildForm")}
+            onPress={() => Linking.openURL("https://shifacom.com")}
             title="زر موقعنا"
+            icon="globe"
           />
         </View>
       </View>
@@ -46,11 +55,22 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     padding: 24,
+    gap: 10,
+  },
+  logoHolder: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
+  logo: {
+    width: 200,
+    height: 40,
+    margin: "auto",
   },
   welcome: {
     textAlign: "center",
     fontSize: 34,
-    marginBottom: 20,
     color: colors.main,
   },
   desc: {

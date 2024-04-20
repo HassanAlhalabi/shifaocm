@@ -1,11 +1,26 @@
 import React from "react";
-import { Pressable, PressableProps, StyleSheet, Text } from "react-native";
+import {
+  Pressable,
+  PressableProps,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
+
 import { colors } from "../../theme/dark";
 
-const CustomButton = (props: PressableProps & { title: string }) => {
+const CustomButton = (
+  props: PressableProps & { title: string; icon?: string }
+) => {
   return (
     <Pressable {...props}>
-      <Text style={styles.button}>{props.title}</Text>
+      <View style={styles.button}>
+        {Boolean(props.icon) && (
+          <Icon style={styles.btnText} name={props.icon} />
+        )}
+        <Text style={styles.btnText}>{props.title}</Text>
+      </View>
     </Pressable>
   );
 };
@@ -23,6 +38,15 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     paddingLeft: 25,
     paddingRight: 25,
+
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 7,
+  },
+  btnText: {
+    color: "#FFF",
     textTransform: "uppercase",
     fontWeight: "600",
   },
