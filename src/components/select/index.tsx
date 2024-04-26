@@ -65,7 +65,7 @@ const Select = <T,>({
               <View
                 style={{
                   ...styles.dropdownItemStyle,
-                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                  ...(isSelected && { backgroundColor: "#fff" }),
                 }}
               >
                 <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
@@ -95,19 +95,20 @@ const styles = StyleSheet.create({
     padding: 8,
     borderWidth: 1,
     borderColor: "#999",
+    color: "#999",
     borderStartEndRadius: 1,
   },
   dropdownButtonTxtStyle: {
     flex: 1,
-    fontSize: 18,
-    fontWeight: "500",
+    fontSize: 16,
+    fontWeight: "400",
     color: "#151E26",
   },
   dropdownButtonArrowStyle: {
-    fontSize: 28,
+    fontSize: 18,
   },
   dropdownButtonIconStyle: {
-    fontSize: 28,
+    fontSize: 21,
     marginRight: 8,
   },
   dropdownMenuStyle: {
@@ -126,12 +127,12 @@ const styles = StyleSheet.create({
   },
   dropdownItemTxtStyle: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "500",
     color: "#151E26",
   },
   dropdownItemIconStyle: {
-    fontSize: 28,
+    fontSize: 21,
     marginRight: 8,
   },
   inputHolder: {

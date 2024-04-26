@@ -1,4 +1,4 @@
-package com.hassanalhalabi.weatherapp
+package com.hassanalhalabi.shifacom
 
 import android.app.Application
 import android.content.res.Configuration

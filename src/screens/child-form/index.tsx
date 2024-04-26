@@ -6,8 +6,7 @@ import Input from "../../components/input";
 import CustomButton from "../../components/button";
 import { GENDER } from "../../helpers/enum";
 import Select from "../../components/select";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../../App";
+import { useAppNavigation } from "../../hooks";
 
 // Add the mother's height to the father's height in either inches or centimeters.
 // Add 5 inches (13 centimeters) for boys or subtract 5 inches (13 centimeters) for girls. Divide by 2.
@@ -34,7 +33,7 @@ const ChildFormScreen = () => {
       gender: GENDER.MALE,
     },
   });
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useAppNavigation();
 
   const gender = watch("gender");
   const childHeight = watch("height");
@@ -53,8 +52,10 @@ const ChildFormScreen = () => {
 
     navigation.navigate("Results", {
       futureHeight: Number(futureHeight),
-      childWeight: Number(childHeight),
-      childHeight: Number(childWeight),
+      childWeight: Number(childWeight),
+      childHeight: Number(childHeight),
+      age: Number(childAge),
+      gender,
     });
   };
 
@@ -134,7 +135,12 @@ const ChildFormScreen = () => {
             value={motherHeight}
           />
           <View style={styles.buttonGroup}>
-            <CustomButton title={"مسح"} onPress={resetForm} icon="refresh" />
+            <CustomButton
+              title={"مسح"}
+              onPress={resetForm}
+              icon="refresh"
+              variant="outlined"
+            />
             <CustomButton
               title={"حساب"}
               onPress={handleSubmit(handleCalculate)}
@@ -170,6 +176,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     flex: 1,
+    backgroundColor: "#FFF",
   },
   container: {
     flex: 1,
@@ -191,6 +198,6 @@ const styles = StyleSheet.create({
 });
 
 const sexes = [
-  { id: GENDER.MALE, title: "Boy", icon: "human-male" },
-  { id: GENDER.FEMALE, title: "Girl", icon: "human-female" },
+  { id: GENDER.MALE, title: "ذكر", icon: "human-male" },
+  { id: GENDER.FEMALE, title: "أنثى", icon: "human-female" },
 ];

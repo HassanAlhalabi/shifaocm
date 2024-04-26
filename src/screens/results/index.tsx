@@ -1,16 +1,45 @@
 import React from "react";
 
-import { RouteProp, useRoute } from "@react-navigation/native";
 import { StyleSheet, Text, View } from "react-native";
 
-import { RootStackParamList } from "../../../App";
+import CustomButton from "../../components/button";
+import { useAppNavigation, useAppRouter } from "../../hooks";
+import { colors } from "../../theme/dark";
 
 const ResultsScreen = () => {
-  const route = useRoute<RouteProp<RootStackParamList, "Results">>();
+  const navigation = useAppNavigation();
+  const route = useAppRouter("Results");
 
   return (
     <View style={styles.wrapper}>
-      <Text>{route.params.futureHeight}</Text>
+      <Text style={styles.header}>
+        طول طفلك النهائي عند البلوغ سيكون بشكل تقريبي{" "}
+        <Text
+          style={{ color: "green" }}
+        >{`${route.params.futureHeight} سم`}</Text>
+      </Text>
+      <View style={styles.buttonGroup}>
+        <CustomButton
+          title="نتيجة الطول"
+          onPress={() =>
+            navigation.navigate("height", {
+              age: route.params.age,
+              childHeight: route.params.childHeight,
+            })
+          }
+          icon="car"
+        />
+        <CustomButton
+          title="نتيجة الوزن"
+          onPress={() =>
+            navigation.navigate("weight", {
+              age: route.params.age,
+              childWeight: route.params.childWeight,
+            })
+          }
+          icon="home"
+        />
+      </View>
     </View>
   );
 };
@@ -18,27 +47,29 @@ const ResultsScreen = () => {
 export default ResultsScreen;
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "cyan",
-    height: 100,
-  },
-  slogan: {
-    fontSize: 18,
-    fontWeight: "800",
-    marginBottom: 20,
-    color: "#999",
-  },
   wrapper: {
     flex: 1,
-    overflow: "scroll",
-  },
-  containerContent: {
+    paddingVertical: 30,
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 20,
-    paddingBottom: 20,
+    backgroundColor: "#FFF",
   },
-  container: {
-    flex: 1,
+  header: {
+    fontSize: 21,
+    textAlign: "center",
+    marginBottom: 15,
+    borderWidth: 2,
+    borderColor: colors.main,
+    borderRadius: 8,
+    padding: 10,
+    marginHorizontal: 20,
+  },
+  buttonGroup: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 10,
+    flexWrap: "wrap",
+    marginVertical: 10,
   },
 });

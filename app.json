@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#FFFFFF"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -20,7 +22,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.hassanalhalabi.weatherapp"
+      "package": "com.hassanalhalabi.shifacom"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "24c4c783-d193-42e9-bfed-0eaa7893e8e3"
+      }
     }
   }
 }

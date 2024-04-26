@@ -1,14 +1,14 @@
 import React from "react";
+
 import { StyleSheet, View, Text, Image } from "react-native";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import * as Linking from "expo-linking";
 
 import CustomButton from "../../components/button";
-import { RootStackParamList } from "../../../App";
 import { colors } from "../../theme/dark";
+import { useAppNavigation } from "../../hooks";
 
 const HomeScreen = () => {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useAppNavigation();
 
   return (
     <View style={styles.container}>
@@ -21,20 +21,21 @@ const HomeScreen = () => {
         </View>
         <Text style={styles.welcome}>أهلاً بك</Text>
         <Text style={styles.desc}>
-          هنا ستتمكن من معرفة عمر طفلك المستقبلي و تتأكد من أن طوله و وزنه
-          الحاليين هما ضمن النطاق الطبيعي, كما يمكنك زيارة موقعنا الإلكتروني
-          للإطلاع على اخر المستجدات و النصائح الطبية
+          ستتمكن من معرفة طول طفلك المستقبلي و تتأكد من أن طوله و وزنه الحاليين
+          هما ضمن النطاق الطبيعي, كما يمكنك زيارة موقعنا الإلكتروني للإطلاع على
+          اخر المستجدات و النصائح الطبية
         </Text>
         <View style={styles.buttonGroup}>
-          <CustomButton
-            onPress={() => navigation.navigate("ChildForm")}
-            title="متابعة"
-            icon="arrow-left"
-          />
           <CustomButton
             onPress={() => Linking.openURL("https://shifacom.com")}
             title="زر موقعنا"
             icon="globe"
+            variant="outlined"
+          />
+          <CustomButton
+            onPress={() => navigation.navigate("ChildForm")}
+            title="متابعة"
+            icon="arrow-left"
           />
         </View>
       </View>

@@ -9,12 +9,10 @@ import * as SplashScreen from "expo-splash-screen";
 import HomeScreen from "./src/screens/home";
 import ResultsScreen from "./src/screens/results";
 import ChildFormScreen from "./src/screens/child-form";
-
-export type RootStackParamList = {
-  Home: undefined;
-  ChildForm: undefined;
-  Results: { futureHeight: number; childHeight: number; childWeight: number };
-};
+import HeightScreen from "./src/screens/height";
+import WeightScreen from "./src/screens/weight";
+import { colors } from "./src/theme/dark";
+import { RootStackParamList } from "./src/hooks";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -28,7 +26,7 @@ export default function App() {
     async function prepare() {
       try {
         // Load resources here
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -75,14 +73,52 @@ export default function App() {
             name="ChildForm"
             component={ChildFormScreen}
             options={{
-              headerShown: false,
+              headerTintColor: "#FFF",
+              headerTitle: "بيانات الطفل",
+              headerTitleAlign: "center",
+              headerRightContainerStyle: {
+                backgroundColor: colors.main,
+              },
+              headerStyle: {
+                backgroundColor: colors.main,
+              },
             }}
           />
           <Stack.Screen
             name="Results"
             component={ResultsScreen}
             options={{
-              headerShown: false,
+              headerTitle: "النتائج",
+              headerTintColor: "#FFF",
+              headerTitleAlign: "center",
+              headerStyle: {
+                backgroundColor: colors.main,
+              },
+            }}
+          />
+          <Stack.Screen
+            name="height"
+            component={HeightScreen}
+            options={{
+              headerTitle: "نتيجة الطول",
+              headerTintColor: "#FFF",
+              headerTitleAlign: "center",
+
+              headerStyle: {
+                backgroundColor: colors.main,
+              },
+            }}
+          />
+          <Stack.Screen
+            name="weight"
+            component={WeightScreen}
+            options={{
+              headerTitle: "نتيجة الوزن",
+              headerTintColor: "#FFF",
+              headerTitleAlign: "center",
+              headerStyle: {
+                backgroundColor: colors.main,
+              },
             }}
           />
         </Stack.Navigator>
@@ -99,7 +135,7 @@ const styles = StyleSheet.create({
   },
   logoHolder: {
     width: "100%",
-    backgroundColor: "#EEE",
+    backgroundColor: "#FFF",
     alignItems: "center",
     padding: 10,
   },
@@ -115,10 +151,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     width: "100%",
-    borderBottomColor: "#EEE",
+    borderBottomColor: "#FFF",
   },
   wrapper: {
     flex: 1,
     display: "flex",
+    backgroundColor: "#FFF",
   },
 });
