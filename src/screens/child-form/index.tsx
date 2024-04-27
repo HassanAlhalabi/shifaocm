@@ -7,6 +7,7 @@ import CustomButton from "../../components/button";
 import { GENDER } from "../../helpers/enum";
 import Select from "../../components/select";
 import { useAppNavigation } from "../../hooks";
+import { colors } from "../../theme/dark";
 
 // Add the mother's height to the father's height in either inches or centimeters.
 // Add 5 inches (13 centimeters) for boys or subtract 5 inches (13 centimeters) for girls. Divide by 2.
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "800",
     marginBottom: 20,
-    color: "#999",
+    color: colors.gray,
   },
   wrapper: {
     flex: 1,

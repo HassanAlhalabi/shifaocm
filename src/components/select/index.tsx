@@ -3,6 +3,7 @@ import { Control, Controller, Path } from "react-hook-form";
 import { StyleSheet, Text, View } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { colors } from "../../theme/dark";
 
 export interface SelectItem {
   id: number | string;
@@ -94,22 +95,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 8,
     borderWidth: 1,
-    borderColor: "#999",
-    color: "#999",
+    borderColor: colors.gray,
+    color: colors.gray,
     borderStartEndRadius: 1,
   },
   dropdownButtonTxtStyle: {
     flex: 1,
     fontSize: 16,
     fontWeight: "400",
-    color: "#151E26",
+    color: colors.gray,
   },
   dropdownButtonArrowStyle: {
     fontSize: 18,
+    color: colors.gray,
   },
   dropdownButtonIconStyle: {
     fontSize: 21,
     marginRight: 8,
+    color: colors.gray,
   },
   dropdownMenuStyle: {
     backgroundColor: "#E9ECEF",
@@ -129,11 +132,12 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontWeight: "500",
-    color: "#151E26",
+    color: colors.gray,
   },
   dropdownItemIconStyle: {
     fontSize: 21,
     marginRight: 8,
+    color: colors.gray,
   },
   inputHolder: {
     paddingLeft: 25,
@@ -142,7 +146,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   inputLabel: {
-    color: "#999",
+    color: colors.gray,
   },
   error: {
     color: "red",

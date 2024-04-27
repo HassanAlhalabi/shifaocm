@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Control, Controller, Path, RegisterOptions } from "react-hook-form";
 import {
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   TextInputProps,
   View,
 } from "react-native";
+import { colors } from "../../theme/dark";
 
 const Input = <T,>(
   props: TextInputProps & {
@@ -22,6 +23,9 @@ const Input = <T,>(
   }
 ) => {
   const { label, error, control, name, required, rules = {}, ...rest } = props;
+
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
     <Controller
       control={control}
@@ -34,8 +38,13 @@ const Input = <T,>(
         <View style={styles.inputHolder}>
           {Boolean(label) && <Text style={styles.inputLabel}>{label}</Text>}
           <TextInput
-            style={styles.inputStyle}
+            style={{
+              ...styles.inputStyle,
+              borderColor: getBorderColor(isFocused),
+            }}
             onChangeText={onChange}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             {...rest}
           />
           {Boolean(error) && <Text style={styles.error}>{error}</Text>}
@@ -55,12 +64,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   inputLabel: {
-    color: "#999",
+    color: colors.gray,
+    marginBottom: 2,
   },
   inputStyle: {
     width: "100%",
     borderWidth: 1,
-    borderColor: "#999",
+    color: colors.gray,
     padding: 8,
     borderRadius: 5,
   },
@@ -68,3 +78,6 @@ const styles = StyleSheet.create({
     color: "red",
   },
 });
+
+const getBorderColor = (isFocused: boolean) =>
+  isFocused ? colors.blueGradientFrom : colors.gray;

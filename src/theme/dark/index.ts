@@ -3,4 +3,5 @@ export const colors = {
   blueGradientFrom: "#50cadd",
   blueGradientTo: "#a6eaf5",
   success: "#090",
+  gray: "#888",
 };

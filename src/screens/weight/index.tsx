@@ -1,12 +1,13 @@
 import React from "react";
 
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
 import data from "../../../data.json";
 import { GENDER } from "../../helpers/enum";
 import AppLineChart from "../../components/line-chart";
 import { useAgeLabels, useAppRouter, useFakeLabels } from "../../hooks";
 import { POUND_TO_KG } from "../../helpers/constants";
+import { colors } from "../../theme/dark";
 
 const WeightScreen = ({ gender }: { gender: GENDER }) => {
   const genderName = gender === GENDER.MALE ? "male" : "female";
@@ -19,14 +20,21 @@ const WeightScreen = ({ gender }: { gender: GENDER }) => {
   const { labels, childAgeIndex: pointIndex } = useAgeLabels(childAge);
   const fakePoints = useFakeLabels(pointIndex, childWeight);
 
+  const instructions = [
+    { key: "- إذا كانت النقطة فوق الخط الأزرق فالوزن أعلى من الطبيعي" },
+    { key: "- إذا كانت النقطة تحت الخط الأحمر فالوزن أقل من الطبيعي" },
+    { key: "- إذا كانت النقطة فوق الخط الأخضر فالوزن أعلى من المتوسط" },
+    { key: "- إذا كانت النقطة تحت الخط الأخضر فالوزن أقل من المتوسط" },
+  ];
+
   return (
     <View style={styles.wrapper}>
-      <Text>مخطط الوزن لدى الأطفال (الوزن بالنسبة للعمر)</Text>
       <AppLineChart
+        title="مخطط الوزن لدى الأطفال (الوزن بالنسبة للعمر)"
         pointIndex={pointIndex}
+        yAxisSuffix="ك.غ"
         data={{
           labels,
-          legend: ["Min", "Avg", "Max"],
           datasets: [
             {
               data: data.weight[genderName].min.map(
@@ -58,6 +66,12 @@ const WeightScreen = ({ gender }: { gender: GENDER }) => {
           ],
         }}
       />
+      <FlatList
+        data={instructions}
+        renderItem={({ item }) => (
+          <Text style={{ color: colors.gray }}>{item.key}</Text>
+        )}
+      />
     </View>
   );
 };
@@ -65,32 +79,11 @@ const WeightScreen = ({ gender }: { gender: GENDER }) => {
 export default WeightScreen;
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "cyan",
-    height: 100,
-  },
-  slogan: {
-    fontSize: 16,
-    fontWeight: "800",
-    marginBottom: 20,
-    color: "#999",
-    backgroundColor: "#FFF",
-  },
   wrapper: {
     flex: 1,
     overflow: "scroll",
-    display: "flex",
     paddingVertical: 24,
     paddingHorizontal: 10,
     justifyContent: "center",
-    alignItems: "center",
-  },
-  containerContent: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 20,
-  },
-  container: {
-    flex: 1,
   },
 });

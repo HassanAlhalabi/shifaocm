@@ -22,11 +22,11 @@ export const renderPoint = (
       <View
         key={`dot-to-render-${index}${x}${y}`}
         style={{
-          left: x - 5,
-          top: y + 55,
+          left: x - 4,
+          top: y - 4,
           position: "absolute",
-          width: 10,
-          height: 10,
+          width: 8,
+          height: 8,
           borderRadius: 10,
           backgroundColor: "orange",
         }}

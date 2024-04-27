@@ -12,12 +12,13 @@ const ResultsScreen = () => {
 
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.header}>
-        طول طفلك النهائي عند البلوغ سيكون بشكل تقريبي{" "}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>الطول النهائي التقريبي المتوقع</Text>
         <Text
-          style={{ color: "green" }}
+          style={{ ...styles.headerText, color: "green" }}
         >{`${route.params.futureHeight} سم`}</Text>
-      </Text>
+      </View>
+
       <View style={styles.buttonGroup}>
         <CustomButton
           title="نتيجة الطول"
@@ -56,7 +57,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   header: {
-    fontSize: 21,
     textAlign: "center",
     marginBottom: 15,
     borderWidth: 2,
@@ -64,6 +64,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginHorizontal: 20,
+    minWidth: 285,
+  },
+  headerText: {
+    fontSize: 21,
+    textAlign: "center",
+    color: colors.gray,
   },
   buttonGroup: {
     display: "flex",
