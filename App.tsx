@@ -13,6 +13,7 @@ import HeightScreen from "./src/screens/height";
 import WeightScreen from "./src/screens/weight";
 import { colors } from "./src/theme/dark";
 import { RootStackParamList } from "./src/hooks";
+import LayoutContainer from "./src/components/layout-container";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -55,11 +56,6 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.wrapper} onLayout={onLayoutRootView}>
-      {/* <View style={styles.header}>
-        <View style={styles.logoHolder}>
-          <Image source={require("./assets/logo.png")} style={styles.logo} />
-        </View>
-      </View> */}
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
@@ -128,31 +124,6 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-  },
-  logoHolder: {
-    width: "100%",
-    backgroundColor: "#FFF",
-    alignItems: "center",
-    padding: 10,
-  },
-  logo: {
-    width: 150,
-    height: 30,
-    margin: "auto",
-  },
-  nav: {
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 20,
-    padding: 10,
-    borderBottomWidth: 1,
-    width: "100%",
-    borderBottomColor: "#FFF",
-  },
   wrapper: {
     flex: 1,
     display: "flex",

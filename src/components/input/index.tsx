@@ -58,8 +58,6 @@ export default Input;
 
 const styles = StyleSheet.create({
   inputHolder: {
-    paddingLeft: 25,
-    paddingRight: 25,
     width: "100%",
     marginBottom: 10,
   },

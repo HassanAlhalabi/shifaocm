@@ -140,8 +140,6 @@ const styles = StyleSheet.create({
     color: colors.gray,
   },
   inputHolder: {
-    paddingLeft: 25,
-    paddingRight: 25,
     width: "100%",
     marginBottom: 10,
   },

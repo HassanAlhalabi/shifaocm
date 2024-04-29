@@ -5,13 +5,15 @@ import { StyleSheet, Text, View } from "react-native";
 import CustomButton from "../../components/button";
 import { useAppNavigation, useAppRouter } from "../../hooks";
 import { colors } from "../../theme/dark";
+import LayoutContainer from "../../components/layout-container";
+import ButtonGroup from "../../components/button/button-group";
 
 const ResultsScreen = () => {
   const navigation = useAppNavigation();
   const route = useAppRouter("Results");
 
   return (
-    <View style={styles.wrapper}>
+    <LayoutContainer center>
       <View style={styles.header}>
         <Text style={styles.headerText}>الطول النهائي التقريبي المتوقع</Text>
         <Text
@@ -19,7 +21,7 @@ const ResultsScreen = () => {
         >{`${route.params.futureHeight} سم`}</Text>
       </View>
 
-      <View style={styles.buttonGroup}>
+      <ButtonGroup>
         <CustomButton
           title="نتيجة الطول"
           onPress={() =>
@@ -40,22 +42,14 @@ const ResultsScreen = () => {
           }
           icon="home"
         />
-      </View>
-    </View>
+      </ButtonGroup>
+    </LayoutContainer>
   );
 };
 
 export default ResultsScreen;
 
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    paddingVertical: 30,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#FFF",
-  },
   header: {
     textAlign: "center",
     marginBottom: 15,
@@ -70,12 +64,5 @@ const styles = StyleSheet.create({
     fontSize: 21,
     textAlign: "center",
     color: colors.gray,
-  },
-  buttonGroup: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 10,
-    flexWrap: "wrap",
-    marginVertical: 10,
   },
 });

@@ -1,12 +1,13 @@
 import React from "react";
 
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { Text } from "react-native";
 
 import data from "../../../data.json";
 import { GENDER } from "../../helpers/enum";
 import { useAgeLabels, useAppRouter, useFakeLabels } from "../../hooks";
 import AppLineChart from "../../components/line-chart";
 import { INCH_TO_CM } from "../../helpers/constants";
+import LayoutContainer from "../../components/layout-container";
 import { colors } from "../../theme/dark";
 
 const instructions = [
@@ -28,7 +29,7 @@ const HeightScreen = ({ gender }: { gender: GENDER }) => {
   const fakePoints = useFakeLabels(pointIndex, childHeight);
 
   return (
-    <View style={styles.wrapper}>
+    <LayoutContainer>
       <AppLineChart
         title="مخطط النمو لدى الأطفال (الطول بالنسبة للعمر)"
         pointIndex={pointIndex}
@@ -66,24 +67,11 @@ const HeightScreen = ({ gender }: { gender: GENDER }) => {
           ],
         }}
       />
-      <FlatList
-        data={instructions}
-        renderItem={({ item }) => (
-          <Text style={{ color: colors.gray }}>{item.key}</Text>
-        )}
-      />
-    </View>
+      {instructions.map((item) => (
+        <Text style={{ color: colors.gray }}>{item.key}</Text>
+      ))}
+    </LayoutContainer>
   );
 };
 
 export default HeightScreen;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    overflow: "scroll",
-    paddingVertical: 24,
-    paddingHorizontal: 10,
-    justifyContent: "center",
-  },
-});

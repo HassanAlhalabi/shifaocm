@@ -39,16 +39,14 @@ const AppLineChart = (props: AppLineChartProps) => {
         style={{
           marginVertical: 8,
           borderRadius: 16,
+          direction: "ltr",
         }}
         withDots={true}
         renderDotContent={(props) => renderPoint(props, pointIndex)}
       />
-      <FlatList
-        data={instructions}
-        renderItem={({ item }) => (
-          <Text style={{ color: item.pointColor }}>{item.key}</Text>
-        )}
-      />
+      {instructions.map((item) => (
+        <Text style={{ color: item.pointColor }}>{item.key}</Text>
+      ))}
     </>
   );
 };

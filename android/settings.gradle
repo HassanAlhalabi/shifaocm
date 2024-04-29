@@ -1,4 +1,4 @@
-rootProject.name = 'shifacom-app'
+rootProject.name = 'Shifacom'
 
 dependencyResolutionManagement {
   versionCatalogs {
