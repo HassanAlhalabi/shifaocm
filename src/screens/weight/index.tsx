@@ -5,10 +5,16 @@ import { Text } from "react-native";
 import data from "../../../data.json";
 import { GENDER } from "../../helpers/enum";
 import AppLineChart from "../../components/line-chart";
-import { useAgeLabels, useAppRouter, useFakeLabels } from "../../hooks";
+import {
+  useAgeLabels,
+  useAppRouter,
+  useFakeLabels,
+  useWeightData,
+} from "../../hooks";
 import { POUND_TO_KG } from "../../helpers/constants";
 import LayoutContainer from "../../components/layout-container";
 import { colors } from "../../theme/dark";
+import AppText from "../../components/text";
 
 const WeightScreen = ({ gender }: { gender: GENDER }) => {
   const genderName = gender === GENDER.MALE ? "male" : "female";
@@ -18,8 +24,17 @@ const WeightScreen = ({ gender }: { gender: GENDER }) => {
   const childAge = router.params.age;
   const childWeight = router.params.childWeight;
 
-  const { labels, childAgeIndex: pointIndex } = useAgeLabels(childAge);
+  const {
+    labels,
+    childAgeIndex: pointIndex,
+    isNewLabel,
+  } = useAgeLabels(childAge);
   const fakePoints = useFakeLabels(pointIndex, childWeight);
+  const { minWeights, avgWeights, maxWeights } = useWeightData(
+    gender,
+    pointIndex,
+    isNewLabel
+  );
 
   const instructions = [
     { key: "- إذا كانت النقطة فوق الخط الأزرق فالوزن أعلى من الطبيعي" },
@@ -38,23 +53,17 @@ const WeightScreen = ({ gender }: { gender: GENDER }) => {
           labels,
           datasets: [
             {
-              data: data.weight[genderName].min.map(
-                (weightInPound) => weightInPound * POUND_TO_KG
-              ),
+              data: minWeights,
               color: () => "#900",
               withDots: false,
             },
             {
-              data: data.weight[genderName].avg.map(
-                (weightInPound) => weightInPound * POUND_TO_KG
-              ),
+              data: avgWeights,
               color: () => "#090",
               withDots: false,
             },
             {
-              data: data.weight[genderName].max.map(
-                (weightInPound) => weightInPound * POUND_TO_KG
-              ),
+              data: maxWeights,
               color: () => "#009",
               withDots: false,
             },
@@ -68,7 +77,7 @@ const WeightScreen = ({ gender }: { gender: GENDER }) => {
         }}
       />
       {instructions.map((item) => (
-        <Text style={{ color: colors.gray }}>{item.key}</Text>
+        <AppText style={{ color: colors.gray }}>{item.key}</AppText>
       ))}
     </LayoutContainer>
   );

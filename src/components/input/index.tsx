@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   inputLabel: {
     color: colors.gray,
     marginBottom: 2,
+    fontFamily: "Cairo_400Regular",
   },
   inputStyle: {
     width: "100%",
@@ -71,9 +72,11 @@ const styles = StyleSheet.create({
     color: colors.gray,
     padding: 8,
     borderRadius: 5,
+    fontFamily: "Cairo_400Regular",
   },
   error: {
     color: "red",
+    fontFamily: "Cairo_400Regular",
   },
 });
 

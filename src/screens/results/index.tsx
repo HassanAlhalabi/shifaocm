@@ -7,6 +7,7 @@ import { useAppNavigation, useAppRouter } from "../../hooks";
 import { colors } from "../../theme/dark";
 import LayoutContainer from "../../components/layout-container";
 import ButtonGroup from "../../components/button/button-group";
+import AppText from "../../components/text";
 
 const ResultsScreen = () => {
   const navigation = useAppNavigation();
@@ -15,10 +16,12 @@ const ResultsScreen = () => {
   return (
     <LayoutContainer center>
       <View style={styles.header}>
-        <Text style={styles.headerText}>الطول النهائي التقريبي المتوقع</Text>
-        <Text
+        <AppText style={styles.headerText}>
+          الطول النهائي التقريبي المتوقع
+        </AppText>
+        <AppText
           style={{ ...styles.headerText, color: "green" }}
-        >{`${route.params.futureHeight} سم`}</Text>
+        >{`${route.params.futureHeight} سم`}</AppText>
       </View>
 
       <ButtonGroup>

@@ -11,9 +11,7 @@ import { useAppNavigation } from "../../hooks";
 import { colors } from "../../theme/dark";
 import LayoutContainer from "../../components/layout-container";
 import ButtonGroup from "../../components/button/button-group";
-
-// Add the mother's height to the father's height in either inches or centimeters.
-// Add 5 inches (13 centimeters) for boys or subtract 5 inches (13 centimeters) for girls. Divide by 2.
+import AppText from "../../components/text";
 
 export interface HeightPredictInfo {
   gender: GENDER;
@@ -54,6 +52,11 @@ const ChildFormScreen = () => {
       futureHeight = (Number(motherHeight) + Number(fatherHeight) - 13) / 2;
     }
 
+    // in case current height more than future height
+    if (Number(childHeight) >= futureHeight) {
+      futureHeight = Number(childHeight) + 1.5 * (18 - Number(childAge));
+    }
+
     navigation.navigate("Results", {
       futureHeight: Number(futureHeight),
       childWeight: Number(childWeight),
@@ -70,7 +73,7 @@ const ChildFormScreen = () => {
 
   return (
     <LayoutContainer>
-      <Text style={styles.slogan}>أدخل بيانات طفلك</Text>
+      <AppText style={styles.slogan}>أدخل بيانات طفلك</AppText>
 
       <Select
         options={sexes}
@@ -158,10 +161,9 @@ const styles = StyleSheet.create({
     height: 100,
   },
   slogan: {
-    fontSize: 18,
-    fontWeight: "800",
     marginBottom: 20,
     color: colors.gray,
+    fontSize: 21,
   },
 });
 

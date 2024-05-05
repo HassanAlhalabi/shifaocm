@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "400",
     color: colors.gray,
+    fontFamily: "Cairo_400Regular",
   },
   dropdownButtonArrowStyle: {
     fontSize: 18,
@@ -145,8 +146,10 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     color: colors.gray,
+    fontFamily: "Cairo_400Regular",
   },
   error: {
     color: "red",
+    fontFamily: "Cairo_400Regular",
   },
 });

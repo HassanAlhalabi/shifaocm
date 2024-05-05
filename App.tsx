@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { SafeAreaView, StatusBar, StyleSheet } from "react-native";
+import { I18nManager, SafeAreaView, StatusBar, StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
@@ -13,7 +13,7 @@ import HeightScreen from "./src/screens/height";
 import WeightScreen from "./src/screens/weight";
 import { colors } from "./src/theme/dark";
 import { RootStackParamList } from "./src/hooks";
-import LayoutContainer from "./src/components/layout-container";
+import { Cairo_400Regular, useFonts } from "@expo-google-fonts/cairo";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -22,12 +22,16 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
+  const [fontLoaded] = useFonts({
+    Cairo_400Regular,
+  });
 
   useEffect(() => {
     async function prepare() {
       try {
+        I18nManager.forceRTL(true);
         // Load resources here
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 500));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -40,7 +44,7 @@ export default function App() {
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
-    if (appIsReady) {
+    if (appIsReady && fontLoaded) {
       // This tells the splash screen to hide immediately! If we call this after
       // `setAppIsReady`, then we may see a blank screen while the app is
       // loading its initial state and rendering its first pixels. So instead,
@@ -72,6 +76,7 @@ export default function App() {
               headerTintColor: "#FFF",
               headerTitle: "بيانات الطفل",
               headerTitleAlign: "center",
+              headerTitleStyle: { fontFamily: "Cairo_400Regular" },
               headerRightContainerStyle: {
                 backgroundColor: colors.main,
               },
@@ -87,6 +92,7 @@ export default function App() {
               headerTitle: "النتائج",
               headerTintColor: "#FFF",
               headerTitleAlign: "center",
+              headerTitleStyle: { fontFamily: "Cairo_400Regular" },
               headerStyle: {
                 backgroundColor: colors.main,
               },
@@ -98,8 +104,8 @@ export default function App() {
             options={{
               headerTitle: "نتيجة الطول",
               headerTintColor: "#FFF",
+              headerTitleStyle: { fontFamily: "Cairo_400Regular" },
               headerTitleAlign: "center",
-
               headerStyle: {
                 backgroundColor: colors.main,
               },
@@ -111,6 +117,7 @@ export default function App() {
             options={{
               headerTitle: "نتيجة الوزن",
               headerTintColor: "#FFF",
+              headerTitleStyle: { fontFamily: "Cairo_400Regular" },
               headerTitleAlign: "center",
               headerStyle: {
                 backgroundColor: colors.main,
@@ -128,5 +135,6 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     backgroundColor: "#FFF",
+    direction: "rtl",
   },
 });

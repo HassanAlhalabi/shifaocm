@@ -8,6 +8,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/cairo": "^0.2.3",
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/stack": "^6.3.29",
     "expo": "~50.0.5",

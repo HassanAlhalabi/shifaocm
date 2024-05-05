@@ -8,6 +8,7 @@ import { colors } from "../../theme/dark";
 import { useAppNavigation } from "../../hooks";
 import LayoutContainer from "../../components/layout-container";
 import ButtonGroup from "../../components/button/button-group";
+import AppText from "../../components/text";
 
 const HomeScreen = () => {
   const navigation = useAppNavigation();
@@ -20,12 +21,12 @@ const HomeScreen = () => {
           style={styles.logo}
         />
       </View>
-      <Text style={styles.welcome}>أهلاً بك</Text>
-      <Text style={styles.desc}>
+      <AppText style={styles.welcome}>أهلاً بك</AppText>
+      <AppText style={styles.desc}>
         ستتمكن من معرفة طول طفلك المستقبلي و تتأكد من أن طوله و وزنه الحاليين
         هما ضمن النطاق الطبيعي, كما يمكنك زيارة موقعنا الإلكتروني للإطلاع على
         اخر المستجدات و النصائح الطبية
-      </Text>
+      </AppText>
       <ButtonGroup>
         <CustomButton
           onPress={() => Linking.openURL("https://shifacom.com")}
@@ -64,5 +65,6 @@ const styles = StyleSheet.create({
   },
   desc: {
     textAlign: "center",
+    color: colors.gray,
   },
 });

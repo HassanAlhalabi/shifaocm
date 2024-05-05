@@ -1,11 +1,12 @@
 import React from "react";
 
 import { LineChart } from "react-native-chart-kit";
-import { Dimensions, FlatList, StyleSheet, Text } from "react-native";
+import { Dimensions, StyleSheet, Text } from "react-native";
 import { LineChartData } from "react-native-chart-kit/dist/line-chart/LineChart";
 
 import { colors } from "../../theme/dark";
 import { renderPoint } from "../../helpers";
+import AppText from "../text";
 
 const instructions = [
   { key: "- الخط الأزرق هو الحد الأعلى الطبيعي", pointColor: "blue" },
@@ -17,8 +18,10 @@ const AppLineChart = (props: AppLineChartProps) => {
   const { title, data, pointIndex, yAxisSuffix } = props;
   return (
     <>
-      {Boolean(title) && <Text style={styles.title}>{title}</Text>}
+      {Boolean(title) && <AppText style={styles.title}>{title}</AppText>}
       <LineChart
+        withOuterLines={false}
+        withShadow={false}
         data={data}
         width={Dimensions.get("window").width - 20}
         height={400}
@@ -29,23 +32,28 @@ const AppLineChart = (props: AppLineChartProps) => {
           backgroundGradientFrom: colors.blueGradientFrom,
           backgroundGradientTo: colors.blueGradientTo,
           decimalPlaces: 0,
+          propsForDots: {
+            r: 3,
+          },
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           style: {
             borderRadius: 16,
           },
         }}
-        bezier
+        // bezier
         style={{
           marginVertical: 8,
           borderRadius: 16,
-          direction: "ltr",
+          direction: "rtl",
         }}
         withDots={true}
         renderDotContent={(props) => renderPoint(props, pointIndex)}
       />
       {instructions.map((item) => (
-        <Text style={{ color: item.pointColor }}>{item.key}</Text>
+        <AppText key={item.key} style={{ color: item.pointColor }}>
+          {item.key}
+        </AppText>
       ))}
     </>
   );
@@ -56,7 +64,6 @@ export default AppLineChart;
 const styles = StyleSheet.create({
   title: {
     color: "#999",
-    fontWeight: "bold",
     fontSize: 16,
     textAlign: "center",
   },

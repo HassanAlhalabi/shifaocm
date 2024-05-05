@@ -23,8 +23,8 @@ const CustomButton = (
   return (
     <Pressable {...rest}>
       <View style={styles.button}>
-        {Boolean(props.icon) && <Icon style={styles.btnText} name={icon} />}
         <Text style={styles.btnText}>{title}</Text>
+        {Boolean(props.icon) && <Icon style={styles.btnText} name={icon} />}
       </View>
     </Pressable>
   );
@@ -48,7 +48,7 @@ const getStyles = (color: Color = "main", variant: Variant = "contained") => {
       backgroundColor: variant === "contained" ? ButtonColors[color] : "#FFF",
       color: variant === "contained" ? "#FFF" : colors.main,
       minWidth: 120,
-      borderRadius: 5,
+      borderRadius: 18,
       textAlign: "center",
       paddingTop: 15,
       paddingBottom: 15,
@@ -58,7 +58,7 @@ const getStyles = (color: Color = "main", variant: Variant = "contained") => {
       alignItems: "center",
       flexDirection: "row",
       justifyContent: "center",
-      borderWidth: 2,
+      borderWidth: 1,
       borderColor: colors.main,
       gap: 7,
     },
@@ -66,6 +66,7 @@ const getStyles = (color: Color = "main", variant: Variant = "contained") => {
       color: variant === "contained" ? "#FFF" : colors.main,
       textTransform: "uppercase",
       fontWeight: "600",
+      fontFamily: "Cairo_400Regular",
     },
   });
 };

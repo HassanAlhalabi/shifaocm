@@ -1,14 +1,17 @@
 import React from "react";
 
-import { Text } from "react-native";
-
 import data from "../../../data.json";
 import { GENDER } from "../../helpers/enum";
-import { useAgeLabels, useAppRouter, useFakeLabels } from "../../hooks";
+import {
+  useAgeLabels,
+  useAppRouter,
+  useFakeLabels,
+  useHeightData,
+} from "../../hooks";
 import AppLineChart from "../../components/line-chart";
-import { INCH_TO_CM } from "../../helpers/constants";
 import LayoutContainer from "../../components/layout-container";
 import { colors } from "../../theme/dark";
+import AppText from "../../components/text";
 
 const instructions = [
   { key: "- إذا كانت النقطة فوق الخط الأزرق فالطول أعلى من الطبيعي" },
@@ -18,15 +21,22 @@ const instructions = [
 ];
 
 const HeightScreen = ({ gender }: { gender: GENDER }) => {
-  const genderName = gender === GENDER.MALE ? "male" : "female";
-
   const router = useAppRouter("height");
 
   const childAge = router.params.age;
   const childHeight = router.params.childHeight;
 
-  const { labels, childAgeIndex: pointIndex } = useAgeLabels(childAge);
+  const {
+    labels,
+    childAgeIndex: pointIndex,
+    isNewLabel,
+  } = useAgeLabels(childAge);
   const fakePoints = useFakeLabels(pointIndex, childHeight);
+  const { minHeights, avgHeights, maxHeights } = useHeightData(
+    gender,
+    pointIndex,
+    isNewLabel
+  );
 
   return (
     <LayoutContainer>
@@ -38,29 +48,22 @@ const HeightScreen = ({ gender }: { gender: GENDER }) => {
           labels,
           datasets: [
             {
-              data: data.height[genderName].min.map(
-                (heightInInch) => heightInInch * INCH_TO_CM
-              ),
+              data: minHeights,
               color: () => "#900",
               withDots: false,
             },
             {
-              data: data.height[genderName].avg.map(
-                (heightInInch) => heightInInch * INCH_TO_CM
-              ),
+              data: avgHeights,
               color: () => "#090",
               withDots: false,
             },
             {
-              data: data.height[genderName].max.map(
-                (heightInInch) => heightInInch * INCH_TO_CM
-              ),
+              data: maxHeights,
               color: () => "#009",
               withDots: false,
             },
             {
               data: fakePoints,
-              strokeWidth: 0,
               withDots: true,
               color: () => "#00000000",
             },
@@ -68,7 +71,7 @@ const HeightScreen = ({ gender }: { gender: GENDER }) => {
         }}
       />
       {instructions.map((item) => (
-        <Text style={{ color: colors.gray }}>{item.key}</Text>
+        <AppText style={{ color: colors.gray }}>{item.key}</AppText>
       ))}
     </LayoutContainer>
   );
