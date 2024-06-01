@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { useForm } from "react-hook-form";
 
 import Input from "../../components/input";

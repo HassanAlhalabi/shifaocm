@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import * as Linking from "expo-linking";
 
 import CustomButton from "../../components/button";
@@ -27,6 +27,12 @@ const HomeScreen = () => {
         هما ضمن النطاق الطبيعي, كما يمكنك زيارة موقعنا الإلكتروني للإطلاع على
         اخر المستجدات و النصائح الطبية
       </AppText>
+      <CustomButton
+        onPress={() => navigation.navigate("ChildForm")}
+        title="متابعة"
+        icon="arrow-left"
+        style={{ width: 300, maxWidth: 250, alignSelf: "center" }}
+      />
       <ButtonGroup>
         <CustomButton
           onPress={() => Linking.openURL("https://shifacom.com")}
@@ -35,9 +41,10 @@ const HomeScreen = () => {
           variant="outlined"
         />
         <CustomButton
-          onPress={() => navigation.navigate("ChildForm")}
-          title="متابعة"
-          icon="arrow-left"
+          onPress={() => Linking.openURL("https://shifaestore.com/")}
+          title="المتجر"
+          icon="shopping-cart"
+          variant="outlined"
         />
       </ButtonGroup>
     </LayoutContainer>
@@ -66,5 +73,6 @@ const styles = StyleSheet.create({
   desc: {
     textAlign: "center",
     color: colors.gray,
+    marginBottom: 10,
   },
 });

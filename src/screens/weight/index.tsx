@@ -1,8 +1,5 @@
 import React from "react";
 
-import { Text } from "react-native";
-
-import data from "../../../data.json";
 import { GENDER } from "../../helpers/enum";
 import AppLineChart from "../../components/line-chart";
 import {
@@ -11,25 +8,25 @@ import {
   useFakeLabels,
   useWeightData,
 } from "../../hooks";
-import { POUND_TO_KG } from "../../helpers/constants";
 import LayoutContainer from "../../components/layout-container";
 import { colors } from "../../theme/dark";
 import AppText from "../../components/text";
 
-const WeightScreen = ({ gender }: { gender: GENDER }) => {
-  const genderName = gender === GENDER.MALE ? "male" : "female";
-
+const WeightScreen = () => {
   const router = useAppRouter("weight");
 
   const childAge = router.params.age;
   const childWeight = router.params.childWeight;
+  const gender = router.params.gender;
+
+  const genderName = router.params.gender === GENDER.MALE ? "ذكور" : "إناث";
 
   const {
     labels,
     childAgeIndex: pointIndex,
     isNewLabel,
   } = useAgeLabels(childAge);
-  const fakePoints = useFakeLabels(pointIndex, childWeight);
+  const fakePoints = useFakeLabels(pointIndex, childWeight, 5);
   const { minWeights, avgWeights, maxWeights } = useWeightData(
     gender,
     pointIndex,
@@ -46,7 +43,7 @@ const WeightScreen = ({ gender }: { gender: GENDER }) => {
   return (
     <LayoutContainer>
       <AppLineChart
-        title="مخطط الوزن لدى الأطفال (الوزن بالنسبة للعمر)"
+        title={`مخطط الوزن لدى الأطفال ( الوزن بالنسبة للعمر - ${genderName} )`}
         pointIndex={pointIndex}
         yAxisSuffix="ك.غ"
         data={{

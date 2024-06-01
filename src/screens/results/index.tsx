@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import CustomButton from "../../components/button";
 import { useAppNavigation, useAppRouter } from "../../hooks";
@@ -31,6 +31,7 @@ const ResultsScreen = () => {
             navigation.navigate("height", {
               age: route.params.age,
               childHeight: route.params.childHeight,
+              gender: route.params.gender,
             })
           }
           icon="car"
@@ -41,6 +42,7 @@ const ResultsScreen = () => {
             navigation.navigate("weight", {
               age: route.params.age,
               childWeight: route.params.childWeight,
+              gender: route.params.gender,
             })
           }
           icon="home"

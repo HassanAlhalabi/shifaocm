@@ -20,11 +20,12 @@ const AppLineChart = (props: AppLineChartProps) => {
     <>
       {Boolean(title) && <AppText style={styles.title}>{title}</AppText>}
       <LineChart
-        withOuterLines={false}
         withShadow={false}
         data={data}
         width={Dimensions.get("window").width - 20}
-        height={400}
+        height={600}
+        yLabelsOffset={20}
+        segments={20}
         yAxisSuffix={yAxisSuffix}
         yAxisInterval={1}
         chartConfig={{
@@ -32,14 +33,16 @@ const AppLineChart = (props: AppLineChartProps) => {
           backgroundGradientFrom: colors.blueGradientFrom,
           backgroundGradientTo: colors.blueGradientTo,
           decimalPlaces: 0,
+          strokeWidth: 1,
           propsForDots: {
-            r: 3,
+            r: 2,
           },
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           style: {
             borderRadius: 16,
           },
+          count: 3,
         }}
         // bezier
         style={{

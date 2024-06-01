@@ -9,7 +9,6 @@ import {
 
 import { GENDER } from "../helpers/enum";
 import data from "../../data.json";
-import { INCH_TO_CM, POUND_TO_KG } from "../helpers/constants";
 import { sortNumbersAsc } from "../helpers";
 
 export const useAppRouter = (route: RoutePath) => {
@@ -22,7 +21,9 @@ export const useAppNavigation = () =>
 export const useAgeLabels = (childAge: number) => {
   let isNewLabel = false;
   const labels = useMemo(() => {
-    const ages = new Set([1, 2, 3, 4, 8, 10, 11, 12, 14, 16, 18]);
+    const ages = new Set([
+      2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ]);
     if (ages.has(childAge)) {
       return [...Array.from(ages)].map((age) => `${age}`);
     }
@@ -46,9 +47,7 @@ export const useHeightData = (
   const genderName = gender === GENDER.MALE ? "male" : "female";
 
   const minHeights = useMemo(() => {
-    const heightData = data.height[genderName].min.map(
-      (heightInInch) => heightInInch * INCH_TO_CM
-    );
+    const heightData = data.height[genderName].min;
 
     let newMinHeight = null;
     if (isNewValue) {
@@ -65,9 +64,7 @@ export const useHeightData = (
   }, [pointIndex, gender]);
 
   const avgHeights = useMemo(() => {
-    const heightData = data.height[genderName].avg.map(
-      (heightInInch) => heightInInch * INCH_TO_CM
-    );
+    const heightData = data.height[genderName].avg;
 
     let newAvgHeight = null;
     if (isNewValue) {
@@ -84,9 +81,7 @@ export const useHeightData = (
   }, [pointIndex, gender]);
 
   const maxHeights = useMemo(() => {
-    const heightData = data.height[genderName].max.map(
-      (heightInInch) => heightInInch * INCH_TO_CM
-    );
+    const heightData = data.height[genderName].max;
 
     let newMaxHeight = null;
     if (isNewValue) {
@@ -113,9 +108,7 @@ export const useWeightData = (
   const genderName = gender === GENDER.MALE ? "male" : "female";
 
   const minWeights = useMemo(() => {
-    const weightData = data.weight[genderName].min.map(
-      (weightInPound) => weightInPound * POUND_TO_KG
-    );
+    const weightData = data.weight[genderName].min;
 
     let newMinWeight = null;
     if (isNewValue) {
@@ -132,9 +125,7 @@ export const useWeightData = (
   }, [pointIndex, gender]);
 
   const avgWeights = useMemo(() => {
-    const weightData = data.weight[genderName].avg.map(
-      (weightInPound) => weightInPound * POUND_TO_KG
-    );
+    const weightData = data.weight[genderName].avg;
 
     let newAvgWeight = null;
     if (isNewValue) {
@@ -151,9 +142,7 @@ export const useWeightData = (
   }, [pointIndex, gender]);
 
   const maxWeights = useMemo(() => {
-    const weightData = data.weight[genderName].max.map(
-      (weightInPound) => weightInPound * POUND_TO_KG
-    );
+    const weightData = data.weight[genderName].max;
 
     let newMaxWeight = null;
     if (isNewValue) {
@@ -172,10 +161,14 @@ export const useWeightData = (
   return { minWeights, maxWeights, avgWeights };
 };
 
-export const useFakeLabels = (pointIndex: number, childAttribute: number) => {
+export const useFakeLabels = (
+  pointIndex: number,
+  childAttribute: number,
+  min: number
+) => {
   const fakePoints = [];
   fakePoints[pointIndex] = childAttribute;
-  fakePoints.fill(0, 0, pointIndex);
+  fakePoints.fill(min, 0, pointIndex);
   return fakePoints;
 };
 
@@ -194,9 +187,11 @@ export type RootStackParamList = {
   height: {
     childHeight: number;
     age: number;
+    gender: GENDER;
   };
   weight: {
     childWeight: number;
     age: number;
+    gender: GENDER;
   };
 };

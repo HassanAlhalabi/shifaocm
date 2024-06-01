@@ -21,8 +21,8 @@ export const renderPoint = (
           left: leftOffset,
           top: y - 3,
           position: "absolute",
-          width: 6,
-          height: 6,
+          width: 7,
+          height: 7,
           borderRadius: 10,
           backgroundColor: "orange",
         }}

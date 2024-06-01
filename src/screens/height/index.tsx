@@ -1,6 +1,5 @@
 import React from "react";
 
-import data from "../../../data.json";
 import { GENDER } from "../../helpers/enum";
 import {
   useAgeLabels,
@@ -20,18 +19,21 @@ const instructions = [
   { key: "- إذا كانت النقطة تحت الخط الأخضر فالطول أقل من المتوسط" },
 ];
 
-const HeightScreen = ({ gender }: { gender: GENDER }) => {
+const HeightScreen = () => {
   const router = useAppRouter("height");
 
   const childAge = router.params.age;
   const childHeight = router.params.childHeight;
+  const gender = router.params.gender;
+
+  const genderName = router.params.gender === GENDER.MALE ? "ذكور" : "إناث";
 
   const {
     labels,
     childAgeIndex: pointIndex,
     isNewLabel,
   } = useAgeLabels(childAge);
-  const fakePoints = useFakeLabels(pointIndex, childHeight);
+  const fakePoints = useFakeLabels(pointIndex, childHeight, 50);
   const { minHeights, avgHeights, maxHeights } = useHeightData(
     gender,
     pointIndex,
@@ -41,31 +43,34 @@ const HeightScreen = ({ gender }: { gender: GENDER }) => {
   return (
     <LayoutContainer>
       <AppLineChart
-        title="مخطط النمو لدى الأطفال (الطول بالنسبة للعمر)"
+        title={`مخطط النمو لدى الأطفال ( الطول بالنسبة للعمر - ${genderName} )`}
         pointIndex={pointIndex}
         yAxisSuffix="سم"
         data={{
           labels,
           datasets: [
             {
+              data: fakePoints,
+              withDots: true,
+              color: () => "#00000000",
+            },
+            {
+              key: "min-heights",
               data: minHeights,
               color: () => "#900",
               withDots: false,
             },
             {
+              key: "avg-heights",
               data: avgHeights,
               color: () => "#090",
               withDots: false,
             },
             {
+              key: "max-heights",
               data: maxHeights,
               color: () => "#009",
               withDots: false,
-            },
-            {
-              data: fakePoints,
-              withDots: true,
-              color: () => "#00000000",
             },
           ],
         }}
