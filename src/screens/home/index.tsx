@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import { StyleSheet, View, Image } from "react-native";
 import * as Linking from "expo-linking";

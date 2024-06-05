@@ -14,10 +14,19 @@ import WeightScreen from "./src/screens/weight";
 import { colors } from "./src/theme/dark";
 import { RootStackParamList } from "./src/hooks";
 import { Cairo_400Regular, useFonts } from "@expo-google-fonts/cairo";
+import mobileAds from "react-native-google-mobile-ads";
+
+mobileAds()
+  .initialize()
+  .then((adapterStatuses) => {
+    // Initialization complete!
+    console.log("Ads Initilized");
+  });
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 StatusBar.setHidden(true);
+
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {

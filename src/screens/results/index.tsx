@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { StyleSheet, View } from "react-native";
+import { ActivityIndicator, Button, StyleSheet, View } from "react-native";
 
 import CustomButton from "../../components/button";
 import { useAppNavigation, useAppRouter } from "../../hooks";
@@ -9,9 +9,70 @@ import LayoutContainer from "../../components/layout-container";
 import ButtonGroup from "../../components/button/button-group";
 import AppText from "../../components/text";
 
+import {
+  InterstitialAd,
+  TestIds,
+  AdEventType,
+} from "react-native-google-mobile-ads";
+
+// const adUnitId = __DEV__
+//   ? TestIds.INTERSTITIAL
+//   : "ca-app-pub-5462521903743334/9986366657";
+
+const adUnitId = "ca-app-pub-5462521903743334/9986366657";
+
+const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+  keywords: ["fashion"],
+});
+
 const ResultsScreen = () => {
   const navigation = useAppNavigation();
   const route = useAppRouter("Results");
+
+  const [adLoaded, setAdLoaded] = useState(false);
+  const [adClosed, setAdClosed] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = interstitial.addAdEventListener(
+      AdEventType.LOADED,
+      () => {
+        setAdLoaded(true);
+      }
+    );
+    // Start loading the interstitial straight away
+    try {
+      interstitial.load();
+    } catch (error) {
+      console.log(error);
+    }
+
+    // Unsubscribe from events on unmount
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    if (adLoaded) {
+      const unsubscribe = interstitial.addAdEventListener(
+        AdEventType.CLOSED,
+        () => {
+          setAdClosed(true);
+        }
+      );
+      interstitial.show();
+      // Unsubscribe from events on unmount
+      return unsubscribe;
+    }
+  }, [adLoaded]);
+
+  console.log(adLoaded);
+
+  if (!adLoaded) {
+    return (
+      <LayoutContainer center>
+        <ActivityIndicator />
+      </LayoutContainer>
+    );
+  }
 
   return (
     <LayoutContainer center>
