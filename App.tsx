@@ -1,10 +1,12 @@
-import "react-native-gesture-handler";
-
 import React, { useCallback, useEffect, useState } from "react";
+
 import { I18nManager, SafeAreaView, StatusBar, StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
+import { Cairo_400Regular, useFonts } from "@expo-google-fonts/cairo";
+import mobileAds from "react-native-google-mobile-ads";
+import "react-native-gesture-handler";
 
 import HomeScreen from "./src/screens/home";
 import ResultsScreen from "./src/screens/results";
@@ -13,14 +15,12 @@ import HeightScreen from "./src/screens/height";
 import WeightScreen from "./src/screens/weight";
 import { colors } from "./src/theme/dark";
 import { RootStackParamList } from "./src/hooks";
-import { Cairo_400Regular, useFonts } from "@expo-google-fonts/cairo";
-import mobileAds from "react-native-google-mobile-ads";
 
 mobileAds()
   .initialize()
   .then((adapterStatuses) => {
     // Initialization complete!
-    console.log("Ads Initilized");
+    console.log("Ads Initialized");
   });
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -54,6 +54,7 @@ export default function App() {
 
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady && fontLoaded) {
+      console.log({ fontLoaded, appIsReady });
       // This tells the splash screen to hide immediately! If we call this after
       // `setAppIsReady`, then we may see a blank screen while the app is
       // loading its initial state and rendering its first pixels. So instead,
@@ -61,7 +62,7 @@ export default function App() {
       // performed layout.
       await SplashScreen.hideAsync();
     }
-  }, [appIsReady]);
+  }, [appIsReady, fontLoaded]);
 
   if (!appIsReady) {
     return null;

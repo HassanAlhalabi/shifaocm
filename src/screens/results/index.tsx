@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import { ActivityIndicator, Button, StyleSheet, View } from "react-native";
+import MaterialCIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import FAIcon from "react-native-vector-icons/FontAwesome5";
 
 import CustomButton from "../../components/button";
 import { useAppNavigation, useAppRouter } from "../../hooks";
@@ -15,14 +17,14 @@ import {
   AdEventType,
 } from "react-native-google-mobile-ads";
 
-// const adUnitId = __DEV__
-//   ? TestIds.INTERSTITIAL
-//   : "ca-app-pub-5462521903743334/9986366657";
+const adUnitId = __DEV__
+  ? TestIds.INTERSTITIAL
+  : "ca-app-pub-5462521903743334/9986366657";
 
-const adUnitId = "ca-app-pub-5462521903743334/9986366657";
+// const adUnitId = "ca-app-pub-5462521903743334/9986366657";
 
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-  keywords: ["fashion"],
+  keywords: ["health, fitness"],
 });
 
 const ResultsScreen = () => {
@@ -37,10 +39,12 @@ const ResultsScreen = () => {
       AdEventType.LOADED,
       () => {
         setAdLoaded(true);
+        console.log("Ads loaded");
       }
     );
     // Start loading the interstitial straight away
     try {
+      console.log("try loading ads");
       interstitial.load();
     } catch (error) {
       console.log(error);
@@ -63,8 +67,6 @@ const ResultsScreen = () => {
       return unsubscribe;
     }
   }, [adLoaded]);
-
-  console.log(adLoaded);
 
   if (!adLoaded) {
     return (
@@ -95,7 +97,7 @@ const ResultsScreen = () => {
               gender: route.params.gender,
             })
           }
-          icon="car"
+          icon={<MaterialCIcon name="human-male-height" />}
         />
         <CustomButton
           title="نتيجة الوزن"
@@ -106,7 +108,7 @@ const ResultsScreen = () => {
               gender: route.params.gender,
             })
           }
-          icon="home"
+          icon={<FAIcon name="weight" />}
         />
       </ButtonGroup>
     </LayoutContainer>

@@ -2,6 +2,7 @@ import React from "react";
 
 import { StyleSheet } from "react-native";
 import { useForm } from "react-hook-form";
+import FAIcon from "react-native-vector-icons/FontAwesome";
 
 import Input from "../../components/input";
 import CustomButton from "../../components/button";
@@ -140,13 +141,13 @@ const ChildFormScreen = () => {
         <CustomButton
           title={"مسح"}
           onPress={resetForm}
-          icon="refresh"
+          icon={<FAIcon name="refresh" />}
           variant="outlined"
         />
         <CustomButton
           title={"حساب"}
           onPress={handleSubmit(handleCalculate)}
-          icon="calculator"
+          icon={<FAIcon name="calculator" />}
         />
       </ButtonGroup>
     </LayoutContainer>

@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
 import { StyleSheet, View, Image } from "react-native";
 import * as Linking from "expo-linking";
+import FAIcon from "react-native-vector-icons/FontAwesome";
 
 import CustomButton from "../../components/button";
 import { colors } from "../../theme/dark";
@@ -30,20 +31,20 @@ const HomeScreen = () => {
       <CustomButton
         onPress={() => navigation.navigate("ChildForm")}
         title="متابعة"
-        icon="arrow-left"
+        icon={<FAIcon name="arrow-left" />}
         style={{ width: 300, maxWidth: 250, alignSelf: "center" }}
       />
       <ButtonGroup>
         <CustomButton
           onPress={() => Linking.openURL("https://shifacom.com")}
           title="زر موقعنا"
-          icon="globe"
+          icon={<FAIcon name="globe" />}
           variant="outlined"
         />
         <CustomButton
           onPress={() => Linking.openURL("https://shifaestore.com/")}
           title="المتجر"
-          icon="shopping-cart"
+          icon={<FAIcon name="shopping-cart" />}
           variant="outlined"
         />
       </ButtonGroup>

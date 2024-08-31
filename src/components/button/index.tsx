@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   Pressable,
   PressableProps,
@@ -6,14 +6,14 @@ import {
   Text,
   View,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons";
 
 import { colors } from "../../theme/dark";
 
 const CustomButton = (
   props: PressableProps & {
     title: string;
-    icon?: string;
+    icon?: ReactNode;
     color?: Color;
     variant?: Variant;
   }
@@ -24,7 +24,9 @@ const CustomButton = (
     <Pressable {...rest}>
       <View style={styles.button}>
         <Text style={styles.btnText}>{title}</Text>
-        {Boolean(props.icon) && <Icon style={styles.btnText} name={icon} />}
+        {Boolean(props.icon) && (
+          <Text style={styles.btnText}>{props.icon}</Text>
+        )}
       </View>
     </Pressable>
   );
