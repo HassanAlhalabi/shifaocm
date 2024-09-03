@@ -65,8 +65,6 @@ const ResultsScreen = () => {
         () => {
           setAdClosed(true);
           console.log("Ad was closed");
-          // Optionally, load the next ad
-          interstitial.load();
         }
       );
       interstitial.show();
@@ -75,7 +73,7 @@ const ResultsScreen = () => {
     }
   }, [adLoaded]);
 
-  if (!adLoaded) {
+  if (!adLoaded || !adClosed) {
     return (
       <LayoutContainer center>
         <ActivityIndicator />
