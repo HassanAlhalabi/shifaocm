@@ -21,8 +21,6 @@ const adUnitId = __DEV__
   ? TestIds.INTERSTITIAL
   : "ca-app-pub-5462521903743334/9986366657";
 
-// const adUnitId = "ca-app-pub-5462521903743334/9986366657";
-
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   keywords: ["health, fitness"],
 });
@@ -35,36 +33,45 @@ const ResultsScreen = () => {
   const [adClosed, setAdClosed] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = interstitial.addAdEventListener(
+    const unsubscribeLoaded = interstitial.addAdEventListener(
       AdEventType.LOADED,
       () => {
         setAdLoaded(true);
-        console.log("Ads loaded");
+        console.log("Ad loaded successfully");
       }
     );
-    // Start loading the interstitial straight away
-    try {
-      console.log("try loading ads");
-      interstitial.load();
-    } catch (error) {
-      console.log(error);
-    }
 
-    // Unsubscribe from events on unmount
-    return unsubscribe;
+    const unsubscribeError = interstitial.addAdEventListener(
+      AdEventType.ERROR,
+      (error) => {
+        console.error("Ad failed to load:", error);
+      }
+    );
+
+    console.log("Attempting to load the ad");
+    interstitial.load();
+
+    // Cleanup event listeners on unmount
+    return () => {
+      unsubscribeLoaded();
+      unsubscribeError();
+    };
   }, []);
 
   useEffect(() => {
     if (adLoaded) {
-      const unsubscribe = interstitial.addAdEventListener(
+      const unsubscribeClosed = interstitial.addAdEventListener(
         AdEventType.CLOSED,
         () => {
           setAdClosed(true);
+          console.log("Ad was closed");
+          // Optionally, load the next ad
+          interstitial.load();
         }
       );
       interstitial.show();
-      // Unsubscribe from events on unmount
-      return unsubscribe;
+
+      return unsubscribeClosed;
     }
   }, [adLoaded]);
 

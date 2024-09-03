@@ -21,6 +21,8 @@ mobileAds()
   .then((adapterStatuses) => {
     // Initialization complete!
     console.log("Ads Initialized");
+  }).catch(error => {
+    alert("Error initializing ADs")
   });
 
 const Stack = createStackNavigator<RootStackParamList>();

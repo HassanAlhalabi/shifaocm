@@ -20,15 +20,22 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.hassanalhalabi.shifacom"
+      "package": "com.hassanalhalabi.shifacom",
+      "versionCode": 2
     },
     "extra": {
       "eas": {
         "projectId": "24c4c783-d193-42e9-bfed-0eaa7893e8e3"
       }
-    }
-  },
-  "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-5462521903743334~6062012634"
+    },
+    "plugins": [
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-5462521903743334~6062012634",
+          "iosAppId": "ca-app-pub-5462521903743334~7544431293"
+        }
+      ]
+    ]
   }
 }
