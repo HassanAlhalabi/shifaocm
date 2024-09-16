@@ -73,13 +73,13 @@ const ResultsScreen = () => {
     }
   }, [adLoaded]);
 
-  if (!adLoaded || !adClosed) {
-    return (
-      <LayoutContainer center>
-        <ActivityIndicator />
-      </LayoutContainer>
-    );
-  }
+  // if (!adLoaded || !adClosed) {
+  //   return (
+  //     <LayoutContainer center>
+  //       <ActivityIndicator />
+  //     </LayoutContainer>
+  //   );
+  // }
 
   return (
     <LayoutContainer center>
